@@ -6,71 +6,49 @@
     <link rel="stylesheet" href="styles.css">
     <title>Botó Animat</title>
     <styles>
-        .button {
+        .animated-button {
             --color: #fff;
             --background: #2B3044;
             --hover-back: #6D58FF;
-            padding: 8px 28px;
+            padding: 12px 30px;
             border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: bold;
             border: none;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             color: var(--color);
             background: var(--background);
-            transition: color 0.2s, background 0.3s;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         
-        .button:before,
-        .button:after {
+        .animated-button:hover {
+            background: var(--hover-back);
+            transform: scale(1.05);
+        }
+        
+        .animated-button:before {
             content: '';
             position: absolute;
-            background: var(--hover-back);
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 200%;
-            border-radius: 40%;
-            transform: translateY(50%);
-            transition: transform 0.4s ease-in;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s;
+            z-index: 0;
         }
         
-        .button:hover {
-            color: #fff;
-            background: #362A89;
-        }
-        
-        .button:hover:before,
-        .button:hover:after {
-            transform: translateY(0);
+        .animated-button:hover:before {
+            transform: translate(-50%, -50%) scale(1);
         }
     </styles>
 </head>
 <body>
-    <button class="button">Button</button>
-    <script src="script.js">
-        document.querySelectorAll('.button').forEach(button => {
-            let div = document.createElement('div'),
-                letters = button.textContent.trim().split('');
-        
-            letters.forEach(letter => {
-                let span = document.createElement('span');
-                span.textContent = letter;
-                div.appendChild(span);
-            });
-        
-            button.innerHTML = div.outerHTML;
-        
-            button.addEventListener('mouseenter', () => {
-                button.classList.add('hover');
-            });
-        
-            button.addEventListener('mouseleave', () => {
-                button.classList.remove('hover');
-            });
-        });
-    </script>
+    <button id="generar" class="animated-button">Generar Progressió</button>
 </body>
 </html>
