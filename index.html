@@ -3,52 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Botó Animat</title>
+    <title>HarmonIA</title>
     <style>
-        .animated-button {
-            --color: #fff;
-            --background: #2B3044;
-            --hover-back: #6D58FF;
-            padding: 12px 30px;
-            border-radius: 20px;
-            font-size: 16px;
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: url(''); /* Afegeix la teva imatge de fons aquí */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+        }
+        .titol {
+            color: #fff;
+            font-size: 5vw; /* Utilitza unitats relatives */
             font-weight: bold;
+            font-family: Impact;
+            text-align: center;
+            margin-bottom: 2vh; 
+        }
+        .inputs {
+            color: #000;
+            font-size: 3vw;
+            font-family: Impact;
+            margin-bottom: 1vh; 
+        }
+        .selector {
+            font-size: 3vw; 
+            font-family: Impact; 
+            color: #000; 
+            background-color: #cfcfcf; 
+            border: 4px solid #696969; 
+            border-radius: 5px;
+            padding: 1vh; 
+            appearance: none; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+        }
+        .animated-button {
+            padding: 2vh 5vw;
+            border-radius: 25px;
+            font-family: Impact;
+            font-size: 3vw;
+            font-weight: bold;
+            color: #fff;
+            background: #2B3044;
             border: none;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            margin-top: 2vh;
             transition: background 0.3s, transform 0.2s;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            color: var(--color);
-            background: var(--background);
         }
-        
         .animated-button:hover {
-            background: var(--hover-back);
+            background: #6f6f6f;
             transform: scale(1.05);
         }
-        
-        .animated-button:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.5s;
-            z-index: 0;
+        .transparent-box {
+            background-color: rgba(128, 128, 128, 0.4); 
+            border-radius: 10px; 
+            padding: 2vh; 
+            width: 80vw;
+            text-align: center;
+            color: #343434;
+            font-size: 3vw;
+            font-family: Impact;
         }
-        
-        .animated-button:hover:before {
-            transform: translate(-50%, -50%) scale(1);
+        #teclat {
+            display: flex;
+            position: relative;
+            width: 80vw;
+            height: 250px;
+            margin-top: 2vh;
+        }
+        .nota {
+            position: relative;
+            border: 1px solid #000;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .nota.white {
+            background-color: white;
+            width: 5vw; /* Canvia a unitat relativa */
+            height: 80%; /* Mida proporcional */
+        }
+        .nota.black {
+            background-color: black;
+            width: 3vw; /* Canvia a unitat relativa */
+            height: 55%; /* Mida proporcional */
+            position: absolute; /* Canvia per estar en la mateixa capa */
+            left: 40%; /* Ajusta a la proporció */
+            z-index: 1; 
         }
     </style>
 </head>
 <body>
+    <div class="titol"><span class="highlight">H</span>armon<span class="highlight">IA</span></div>
+    <label for="durada" class="inputs" id="durada1">Acords:</label>
+    <select id="durada" name="durada" class="selector">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+    </select>
+
+    <div id="to" class="inputs">To:</div>
+    
     <button id="generar" class="animated-button">Generar Progressió</button>
+
+    <div id="resultat" class="transparent-box"></div>
+
+    <div id="teclat">
+        <div class="nota white" style="left: 0;" data-nota="0" data-nom="C"></div>
+        <div class="nota black" style="left: 40px;" data-nota="1" data-nom="Db"></div>
+        <div class="nota white" style="left: 55px;" data-nota="2" data-nom="D"></div>
+        <div class="nota black" style="left: 95px;" data-nota="3" data-nom="Eb"></div>
+        <div class="nota white" style="left: 110px;" data-nota="4" data-nom="E"></div>
+        <div class="nota white" style="left: 165px;" data-nota="5" data-nom="F"></div>
+        <div class="nota black" style="left: 205px;" data-nota="6" data-nom="F#"></div>
+        <div class="nota white" style="left: 220px;" data-nota="7" data-nom="G"></div>
+        <div class="nota black" style="left: 260px;" data-nota="8" data-nom="Ab"></div>
+        <div class="nota white" style="left: 275px;" data-nota="9" data-nom="A"></div>
+        <div class="nota black" style="left: 315px;" data-nota="10" data-nom="Bb"></div>
+        <div class="nota white" style="left: 330px;" data-nota="11" data-nom="B"></div>
+    </div>
+
+    <script>
+        const acords = {0: "C", 1: "Db", 2: "D", 3: "Eb", 4: "E", 5: "F", 6: "F#", 7: "G", 8: "Ab", 9: "A", 10: "Bb", 11: "B"};
+        
+        let to = ""; 
+
+        document.querySelectorAll('.nota').forEach(nota => {
+            nota.addEventListener('mouseenter', () => {
+                nota.style.backgroundColor = 'lightgray'; 
+            });
+            nota.addEventListener('mouseleave', () => {
+                nota.style.backgroundColor = '';
+            });
+            nota.addEventListener('click', () => {
+                to = parseInt(nota.getAttribute('data-nota')); 
+                document.getElementById('to').innerHTML = `To: ${nota.getAttribute('data-nom')}`; 
+            });
+        });
+
+        function generarProgressio(durada, dades, to) {
+            let progressio = [];
+            while (progressio.length < durada) {
+                if (dades.length === 0) {
+                    console.error("No hi ha dades disponibles per generar la progressió.");
+                    return [];
+                }
+                const progressioAleatoria = dades[Math.floor(Math.random() * dades.length)];
+                const acordsSeparats = progressioAleatoria.split(" "); // Separar els acords
+
+                for (let acord of acordsSeparats) {
+                    if (/^\d+m?$/.test(acord)) { 
+                        progressio.push(acord);
+                    }
+                }
+            }
+
+            return progressio.slice(0, durada).map(i => {
+                const acordNum = parseInt(i);
+                const nota = (acordNum + to) % 12;
+                return i.includes('m') ? acords[nota] + 'm' : acords[nota];
+            });
+        }
+
+        document.getElementById('generar').addEventListener('click', () => {
+            const durada = parseInt(document.getElementById('durada').value);
+            const dades = ['0', '0', '0', '0', '0', '0', '0', '0', '0',
+                           '9m', '9m', '9m', '9m', '9m', '9m', '9m',
+                           '0 9m', '0 9m', '0 9m', '0 9m', '0 9m',
+                           '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
+                           '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 
+                                                      '0 7 9m 5', '0 7 9m 5'];
+            const resultat = generarProgressio(durada, dades, to);
+            const progressioText = resultat.length ? `${resultat.join(' ')}` : "No es pot generar la progressió.";
+            document.getElementById('resultat').innerHTML = progressioText;
+        });
+    </script>
 </body>
 </html>
