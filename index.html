@@ -1,100 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-    <title>HarmonIA</title>
+    <title>Teclat Musical</title>
     <style>
-        body {
-            background-image: url('https://example.com/fons.jpg'); /* Canvia aquest URL per la teva imatge */
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
+        #teclat {
+            position: relative;
+            width: 800px;
+            height: 250px;
+            margin: 0 auto;
+            background-color: #eee;
         }
-
-        .container {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 400px;
-        }
-
-        select, input[type="number"] {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-bottom: 15px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
+        .nota {
+            position: absolute;
+            border: 1px solid #000;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
             cursor: pointer;
-            width: 100%;
+            transition: background-color 0.2s;
         }
-
-        #progression {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
+        .nota.white {
+            background-color: white;
+            width: 55px;
+            height: 247px;
+        }
+        .nota.black {
+            background-color: black;
+            width: 31px;
+            height: 142px;
+            left: 40px; /* Offset for black keys */
+            z-index: 1; /* Make black keys on top */
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h2>HarmonIA: Genera la teva Progressió</h2>
-
-        <p>
-            <label for="tonality">Selecciona la tonalitat: </label>
-            <select id="tonality">
-                <option value="C">C</option>
-                <option value="Db">Db</option>
-                <option value="D">D</option>
-                <option value="Eb">Eb</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-                <option value="F#">F#</option>
-                <option value="G">G</option>
-                <option value="Ab">Ab</option>
-                <option value="A">A</option>
-                <option value="Bb">Bb</option>
-                <option value="B">B</option>
-            </select>
-        </p>
-
-        <p>
-            <label for="duration">Durada de la progressió (1-8): </label>
-            <input type="number" id="duration" min="1" max="8" value="4">
-        </p>
-
-        <button id="createProgression">Crear Progressió</button>
-
-        <p id="progression">Progressió: </p>
+    <h1>Selecciona el To</h1>
+    <div id="teclat">
+        <div class="nota white" style="left: 0;" data-nota="C"></div>
+        <div class="nota black" style="left: 40px;" data-nota="Db"></div>
+        <div class="nota white" style="left: 55px;" data-nota="D"></div>
+        <div class="nota black" style="left: 95px;" data-nota="Eb"></div>
+        <div class="nota white" style="left: 110px;" data-nota="E"></div>
+        <div class="nota white" style="left: 165px;" data-nota="F"></div>
+        <div class="nota black" style="left: 205px;" data-nota="F#"></div>
+        <div class="nota white" style="left: 220px;" data-nota="G"></div>
+        <div class="nota black" style="left: 260px;" data-nota="Ab"></div>
+        <div class="nota white" style="left: 275px;" data-nota="A"></div>
+        <div class="nota black" style="left: 315px;" data-nota="Bb"></div>
+        <div class="nota white" style="left: 330px;" data-nota="B"></div>
     </div>
 
-    <py-script>
-        for i in range (10):
-            print(i)
-    </py-script>
+    <script>
+        // Funció per gestionar el clic a les notes
+        document.querySelectorAll('.nota').forEach(nota => {
+            nota.addEventListener('mouseenter', () => {
+                nota.style.backgroundColor = 'lightgray'; // Efecte hover
+            });
+            nota.addEventListener('mouseleave', () => {
+                nota.style.backgroundColor = ''; // Restableix el color
+            });
+            nota.addEventListener('click', () => {
+                const to = nota.getAttribute('data-nota');
+                alert(`Has seleccionat el to: ${to}`);
+                // Aquí pots assignar el to seleccionat a la variable corresponent
+            });
+        });
+    </script>
 </body>
-
 </html>
