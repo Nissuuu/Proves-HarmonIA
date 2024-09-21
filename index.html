@@ -6,103 +6,123 @@
     <title>HarmonIA</title>
     <style>
         body {
+            background-image: url(''); /* Insereix la teva imatge de fons aquí */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-image: url(''); /* Afegeix la teva imatge de fons aquí */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             margin: 0;
+            font-family: 'Impact', sans-serif;
         }
+
         .titol {
             color: #fff;
-            font-size: 5vw; /* Utilitza unitats relatives */
+            font-size: 5em;
             font-weight: bold;
-            font-family: Impact;
+            letter-spacing: 4px;
             text-align: center;
-            margin-bottom: 2vh; 
+            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa;
+            margin-bottom: 20px;
         }
-        .inputs {
-            color: #000;
-            font-size: 3vw;
-            font-family: Impact;
-            margin-bottom: 1vh; 
+
+        .inputs, .selector {
+            font-size: 1.5em; 
+            margin: 10px;
         }
-        .selector {
-            font-size: 3vw; 
-            font-family: Impact; 
-            color: #000; 
-            background-color: #cfcfcf; 
-            border: 4px solid #696969; 
-            border-radius: 5px;
-            padding: 1vh; 
-            appearance: none; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-        }
-        .animated-button {
-            padding: 2vh 5vw;
-            border-radius: 25px;
-            font-family: Impact;
-            font-size: 3vw;
-            font-weight: bold;
-            color: #fff;
-            background: #2B3044;
-            border: none;
-            cursor: pointer;
-            margin-top: 2vh;
-            transition: background 0.3s, transform 0.2s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .animated-button:hover {
-            background: #6f6f6f;
-            transform: scale(1.05);
-        }
-        .transparent-box {
-            background-color: rgba(128, 128, 128, 0.4); 
-            border-radius: 10px; 
-            padding: 2vh; 
-            width: 80vw;
-            text-align: center;
-            color: #343434;
-            font-size: 3vw;
-            font-family: Impact;
-        }
+
         #teclat {
             display: flex;
+            justify-content: center;
             position: relative;
-            width: 80vw;
+            width: 800px;
             height: 250px;
-            margin-top: 2vh;
+            margin: 20px 0;
         }
+
         .nota {
-            position: relative;
             border: 1px solid #000;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
             cursor: pointer;
             transition: background-color 0.2s;
         }
+
         .nota.white {
             background-color: white;
-            width: 5vw; /* Canvia a unitat relativa */
-            height: 80%; /* Mida proporcional */
+            width: 55px;
+            height: 247px;
         }
+
         .nota.black {
             background-color: black;
-            width: 3vw; /* Canvia a unitat relativa */
-            height: 55%; /* Mida proporcional */
-            position: absolute; /* Canvia per estar en la mateixa capa */
-            left: 40%; /* Ajusta a la proporció */
-            z-index: 1; 
+            width: 31px;
+            height: 142px;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .animated-button {
+            color: #fff;
+            background: #2B3044;
+            padding: 16px 40px;
+            border-radius: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin: 20px;
+        }
+        
+        .animated-button:hover {
+            background: #6f6f6f;
+            transform: scale(1.05);
+        }
+        
+        .animated-button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s;
+            z-index: 0;
+        }
+        
+        .animated-button:hover:before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .transparent-box {
+            background-color: rgba(128, 128, 128, 0.4); 
+            border-radius: 10px; 
+            padding: 10px; 
+            width: 650px;
+            height: 70px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+            color: #343434;
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
+
 <body>
     <div class="titol"><span class="highlight">H</span>armon<span class="highlight">IA</span></div>
-    <label for="durada" class="inputs" id="durada1">Acords:</label>
+
+    <label for="durada" class="inputs">Acords:</label>
     <select id="durada" name="durada" class="selector">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -117,7 +137,7 @@
     <div id="to" class="inputs">To:</div>
     
     <button id="generar" class="animated-button">Generar Progressió</button>
-
+    
     <div id="resultat" class="transparent-box"></div>
 
     <div id="teclat">
@@ -137,7 +157,6 @@
 
     <script>
         const acords = {0: "C", 1: "Db", 2: "D", 3: "Eb", 4: "E", 5: "F", 6: "F#", 7: "G", 8: "Ab", 9: "A", 10: "Bb", 11: "B"};
-        
         let to = ""; 
 
         document.querySelectorAll('.nota').forEach(nota => {
@@ -182,9 +201,8 @@
             const dades = ['0', '0', '0', '0', '0', '0', '0', '0', '0',
                            '9m', '9m', '9m', '9m', '9m', '9m', '9m',
                            '0 9m', '0 9m', '0 9m', '0 9m', '0 9m',
-                           '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
-                           '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 
-                                                      '0 7 9m 5', '0 7 9m 5'];
+                           '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
+                           '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5'];
             const resultat = generarProgressio(durada, dades, to);
             const progressioText = resultat.length ? `${resultat.join(' ')}` : "No es pot generar la progressió.";
             document.getElementById('resultat').innerHTML = progressioText;
