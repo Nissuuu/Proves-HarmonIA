@@ -38,12 +38,12 @@
         #generar {
             position: absolute;
             top: 500px;
-            left: 360px;
+            left: 800px;
         }
         #reproduir {
             position: absolute;
             top: 500px;
-            left: 570px;
+            left: 950px;
         }
         .nota {
             position: absolute;
@@ -77,6 +77,9 @@
             letter-spacing: 2px;
             border: none;
             cursor: pointer;
+            position: absolute;
+            top: 750px;
+            left: 360px;
             overflow: hidden;
             transition: background 0.3s, transform 0.2s;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -211,8 +214,8 @@
 
     <script>
         const acords = {0: "C", 1: "Db", 2: "D", 3: "Eb", 4: "E", 5: "F", 6: "F#", 7: "G", 8: "Ab", 9: "A", 10: "Bb", 11: "B"};
-        
         let to = ""; 
+        let progressioActual = []; 
 
         document.querySelectorAll('.nota').forEach(nota => {
             nota.addEventListener('mouseenter', () => {
@@ -235,50 +238,47 @@
                     return [];
                 }
                 const progressioAleatoria = dades[Math.floor(Math.random() * dades.length)];
-                const acordsSeparats = progressioAleatoria.split(" "); // Separar els acords
+                const acordsSeparats = progressioAleatoria.split(" ");
 
                 for (let acord of acordsSeparats) {
-                    if (/^\d+m?$/.test(acord)) { 
+                    if (/^\d+m?$/.test(acord)) {
                         progressio.push(acord);
                     }
                 }
             }
 
-            return progressio.slice(0, durada).map(i => {
+            progressioActual = progressio.slice(0, durada).map(i => {
                 const acordNum = parseInt(i);
                 const nota = (acordNum + to) % 12;
                 return i.includes('m') ? acords[nota] + 'm' : acords[nota];
             });
-        }
 
-        function reproduirAudio(progressio) {
-            progressio.forEach(acord => {
-                const audio = new Audio(`${acord}.mp3`);
-                audio.play();
-            });
+            return progressioActual;
         }
 
         document.getElementById('generar').addEventListener('click', () => {
             const durada = parseInt(document.getElementById('durada').value);
-            const dades = ['0', '0', '0', '0', '0', '0', '0', '0', '0',
-                           '9m', '9m', '9m', '9m', '9m', '9m', '9m',
-                           '0 9m', '0 9m', '0 9m', '0 9m', '0 9m',
-                           '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
-                           '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5'];
+            const dades = [
+                '0', '0', '0', '0', '0', '0', '0', '0', '0',
+                '9m', '9m', '9m', '9m', '9m', '9m', '9m',
+                '0 9m', '0 9m', '0 9m', '0 9m', '0 9m',
+                '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
+                '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5'
+            ];
             const resultat = generarProgressio(durada, dades, to);
             const progressioText = resultat.length ? `${resultat.join(' ')}` : "No es pot generar la progressió.";
             document.getElementById('resultat').innerHTML = progressioText;
         });
 
         document.getElementById('reproduir').addEventListener('click', () => {
-            const durada = parseInt(document.getElementById('durada').value);
-            const dades = ['0', '0', '0', '0', '0', '0', '0', '0', '0',
-                           '9m', '9m', '9m', '9m', '9m', '9m', '9m',
-                           '0 9m', '0 9m', '0 9m', '0 9m', '0 9m',
-                           '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
-                           '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5'];
-            const resultat = generarProgressio(durada, dades, to);
-            reproduirAudio(resultat);
+            if (progressioActual.length > 0) {
+                progressioActual.forEach(acord => {
+                    const audio = new Audio(`${acord}.mp3`);
+                    audio.play();
+                });
+            } else {
+                alert("No hi ha cap progressió per reproduir.");
+            }
         });
     </script>
 </body>
