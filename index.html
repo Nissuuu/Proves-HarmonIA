@@ -6,122 +6,80 @@
     <title>HarmonIA</title>
     <style>
         body {
-            background-image: url(''); /* Insereix la teva imatge de fons aquí */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            height: 100vh;
+            background-image: url(''); /* Afegeix la URL de la teva imatge de fons */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             margin: 0;
-            font-family: 'Impact', sans-serif;
+            font-family: Impact;
         }
-
         .titol {
             color: #fff;
             font-size: 5em;
             font-weight: bold;
             letter-spacing: 4px;
+            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
             text-align: center;
-            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa;
             margin-bottom: 20px;
         }
-
-        .inputs, .selector {
-            font-size: 1.5em; 
+        .inputs {
+            color: #000;
+            font-size: 2em;
             margin: 10px;
+            text-align: center;
         }
-
-        #teclat {
-            display: flex;
-            justify-content: center;
-            position: relative;
-            width: 800px;
-            height: 250px;
-            margin: 20px 0;
-        }
-
-        .nota {
-            border: 1px solid #000;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        .selector {
+            font-size: 1em;
+            color: #000;
+            background-color: #cfcfcf;
+            border: 4px solid #696969;
+            border-radius: 5px;
+            padding: 10px;
+            appearance: none;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s;
         }
-
-        .nota.white {
-            background-color: white;
-            width: 55px;
-            height: 247px;
+        .selector:hover {
+            border-color: #0030d5;
         }
-
-        .nota.black {
-            background-color: black;
-            width: 31px;
-            height: 142px;
-            position: absolute;
-            z-index: 1;
+        .selector:focus {
+            border-color: #0030d5;
+            outline: none;
         }
-
+        .transparent-box {
+            background-color: rgba(128, 128, 128, 0.4);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+            color: #343434;
+            font-size: 2em;
+            text-align: center;
+        }
         .animated-button {
-            color: #fff;
-            background: #2B3044;
             padding: 16px 40px;
             border-radius: 25px;
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 2px;
+            font-size: 1.5em;
             border: none;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
             transition: background 0.3s, transform 0.2s;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            margin: 20px;
+            color: #fff;
+            background: #2B3044;
         }
-        
         .animated-button:hover {
             background: #6f6f6f;
             transform: scale(1.05);
         }
-        
-        .animated-button:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.5s;
-            z-index: 0;
-        }
-        
-        .animated-button:hover:before {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .transparent-box {
-            background-color: rgba(128, 128, 128, 0.4); 
-            border-radius: 10px; 
-            padding: 10px; 
-            width: 650px;
-            height: 70px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-            color: #343434;
-            font-size: 1.5em;
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 </head>
-
 <body>
     <div class="titol"><span class="highlight">H</span>armon<span class="highlight">IA</span></div>
-
     <label for="durada" class="inputs">Acords:</label>
     <select id="durada" name="durada" class="selector">
         <option value="1">1</option>
@@ -133,11 +91,10 @@
         <option value="7">7</option>
         <option value="8">8</option>
     </select>
-
     <div id="to" class="inputs">To:</div>
     
     <button id="generar" class="animated-button">Generar Progressió</button>
-    
+
     <div id="resultat" class="transparent-box"></div>
 
     <div id="teclat">
@@ -157,6 +114,7 @@
 
     <script>
         const acords = {0: "C", 1: "Db", 2: "D", 3: "Eb", 4: "E", 5: "F", 6: "F#", 7: "G", 8: "Ab", 9: "A", 10: "Bb", 11: "B"};
+        
         let to = ""; 
 
         document.querySelectorAll('.nota').forEach(nota => {
@@ -180,7 +138,7 @@
                     return [];
                 }
                 const progressioAleatoria = dades[Math.floor(Math.random() * dades.length)];
-                const acordsSeparats = progressioAleatoria.split(" "); // Separar els acords
+                const acordsSeparats = progressioAleatoria.split(" "); 
 
                 for (let acord of acordsSeparats) {
                     if (/^\d+m?$/.test(acord)) { 
@@ -201,7 +159,7 @@
             const dades = ['0', '0', '0', '0', '0', '0', '0', '0', '0',
                            '9m', '9m', '9m', '9m', '9m', '9m', '9m',
                            '0 9m', '0 9m', '0 9m', '0 9m', '0 9m',
-                           '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
+                           '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
                            '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5'];
             const resultat = generarProgressio(durada, dades, to);
             const progressioText = resultat.length ? `${resultat.join(' ')}` : "No es pot generar la progressió.";
