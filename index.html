@@ -216,7 +216,7 @@
         const acords = {0: "C", 1: "Db", 2: "D", 3: "Eb", 4: "E", 5: "F", 6: "F#", 7: "G", 8: "Ab", 9: "A", 10: "Bb", 11: "B"};
         let to = ""; 
         let progressioActual = []; 
-
+    
         document.querySelectorAll('.nota').forEach(nota => {
             nota.addEventListener('mouseenter', () => {
                 nota.style.backgroundColor = 'lightgray'; 
@@ -229,7 +229,7 @@
                 document.getElementById('to').innerHTML = `To: ${nota.getAttribute('data-nom')}`; 
             });
         });
-
+    
         function generarProgressio(durada, dades, to) {
             let progressio = [];
             while (progressio.length < durada) {
@@ -239,23 +239,23 @@
                 }
                 const progressioAleatoria = dades[Math.floor(Math.random() * dades.length)];
                 const acordsSeparats = progressioAleatoria.split(" ");
-
+    
                 for (let acord of acordsSeparats) {
                     if (/^\d+m?$/.test(acord)) {
                         progressio.push(acord);
                     }
                 }
             }
-
+    
             progressioActual = progressio.slice(0, durada).map(i => {
                 const acordNum = parseInt(i);
                 const nota = (acordNum + to) % 12;
                 return i.includes('m') ? acords[nota] + 'm' : acords[nota];
             });
-
+    
             return progressioActual;
         }
-
+    
         document.getElementById('generar').addEventListener('click', () => {
             const durada = parseInt(document.getElementById('durada').value);
             const dades = [
@@ -269,13 +269,32 @@
             const progressioText = resultat.length ? `${resultat.join(' ')}` : "No es pot generar la progressió.";
             document.getElementById('resultat').innerHTML = progressioText;
         });
-
-        document.getElementById('reproduir').addEventListener('click', () => {
-            if (resultat.length > 0) {
-                resultat.forEach(acord => {
+    
+        // Funció per reproduir acords seqüencialment
+        function reproduirProgressio(progressio) {
+            let index = 0;
+    
+            function tocarSeguentAcord() {
+                if (index < progressio.length) {
+                    const acord = progressio[index];
                     const audio = new Audio(`${acord}.mp3`);
                     audio.play();
-                });
+    
+                    // Quan l'àudio acaba, passa al següent acord
+                    audio.addEventListener('ended', () => {
+                        index++;
+                        tocarSeguentAcord();
+                    });
+                }
+            }
+    
+            // Iniciar la reproducció amb el primer acord
+            tocarSeguentAcord();
+        }
+    
+        document.getElementById('reproduir').addEventListener('click', () => {
+            if (progressioActual.length > 0) {
+                reproduirProgressio(progressioActual);
             } else {
                 alert("No hi ha cap progressió per reproduir.");
             }
