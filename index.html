@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Botó Animat</title>
-    <styles>
+    <style>
         .animated-button {
-            color: #fff;
-            background: #2B3044;
-            hover-back: #6D58FF;
+            --color: #fff;
+            --background: #2B3044;
+            --hover-back: #6D58FF;
             padding: 12px 30px;
             border-radius: 20px;
             font-size: 16px;
@@ -18,10 +18,10 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            color: var(--color);
-            background: var(--background);
             transition: background 0.3s, transform 0.2s;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            color: var(--color);
+            background: var(--background);
         }
         
         .animated-button:hover {
@@ -46,7 +46,7 @@
         .animated-button:hover:before {
             transform: translate(-50%, -50%) scale(1);
         }
-    </styles>
+    </style>
 </head>
 <body>
     <button id="generar" class="animated-button">Generar Progressió</button>
