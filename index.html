@@ -271,8 +271,8 @@
         });
 
         document.getElementById('reproduir').addEventListener('click', () => {
-            if (progressioActual.length > 0) {
-                progressioActual.forEach(acord => {
+            if (resultat.length > 0) {
+                resultat.forEach(acord => {
                     const audio = new Audio(`${acord}.mp3`);
                     audio.play();
                 });
