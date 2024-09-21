@@ -5,49 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HarmonIA</title>
     <style>
-        button {
-            width: 150px;
-            height: 40px;
-            background: linear-gradient(to left top, #8cccd1 50%, #b8d9dc 50%);
-            border: none;
-            color: #000000;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-            font-family: 'Lato';
-            font-weight: 600;
-            outline: none;
-            cursor: pointer;
-            position: relative;
-            padding: 0;
-            overflow: hidden;
-            transition: all .5s;
-            box-shadow: 0px 1px 2px rgba(0,0,0,.2);
+         .titol {
+            color: #fff;
+            font-size: 12em;
+            font-weight: bold;
+            font-family: Helvetica;
+            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
         }
-        button span {
-            position: absolute;
-            display: block;
-        }
-        button span:nth-child(1) {
-            height: 3px;
-            width: 150px;
-            top: 0;
-            left: -150px;
-            background: linear-gradient(to right, rgba(0,0,0,0), #f6e58d);
-            animation: span1 2s linear infinite;
-            animation-delay: 1s;
-        }
-        @keyframes span1 {
-            0% { left: -200px; }
-            100% { left: 200px; }
-        }
-        /* Add similar keyframes for other spans if needed */
-        button:hover {
-            transform: rotate(-3deg) scale(1.1);
-            box-shadow: 0px 2px 4px rgba(0,0,0,.3);
+        
+        .titol {
+          text-align: center;
         }
     </style>
 </head>
 <body>
-    <button>Crea la progressió!</button>
+    <div class="titol">HarmonIA</div>
 </body>
 </html>
